@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Test Walk
-//
-//  Created by userH309 on 23/02/2018.
-//  Copyright © 2018 shabibi. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
