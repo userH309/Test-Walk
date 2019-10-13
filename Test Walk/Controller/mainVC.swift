@@ -20,8 +20,16 @@ class mainVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     //This function will be called every time device moves 500m from last location.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //Always show the new location in the console.
-        print("UPDATE LOCATION:\nLAT: \(String(describing: locations.last?.coordinate.latitude))\nLON: : \(locations.last?.coordinate.longitude)\n\n")
+        
+        CLGeocoder().reverseGeocodeLocation(locations.last!) { (placemarks, error) in
+            if error != nil {
+                print(error?.localizedDescription)
+            }
+            if let placemark = placemarks?.last {
+                print("Hey: \(placemark.subLocality!)")
+                print("Hey: \(placemark.postalCode! )")
+            }
+        }
     }
     
     func getLocation() {
@@ -29,7 +37,7 @@ class mainVC: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             mapView.showsUserLocation = true
-            locationManager.startMonitoringSignificantLocationChanges()
+            locationManager.startUpdatingLocation()
         }
     }
 }
